@@ -1,0 +1,22 @@
+- name: System setup | Install scheduled reboot service
+  ansible.builtin.copy:
+    src: system_setup/scheduled_reboot_service
+    dest: /etc/systemd/system/scheduled-reboot.service
+    owner: root
+    group: root
+    mode: '0640'
+  notify: systemd_daemon_reload
+
+- name: System setup | Install scheduled reboot timer
+  ansible.builtin.template:
+    src: reboot_timer.j2
+    dest: /etc/systemd/system/scheduled-reboot.timer
+    owner: root
+    group: root
+    mode: '0640'
+  notify: systemd_daemon_reload
+
+- name: System setup | Enable scheduled reboot timer
+  ansible.builtin.systemd:
+    name: scheduled-reboot.timer
+    enabled: true

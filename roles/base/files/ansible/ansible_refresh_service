@@ -1,0 +1,10 @@
+[Unit]
+Description=Ansible Refresh
+Before=ansible-pull.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/rm -rf /root/.ansible/
+
+[Install]
+WantedBy=multi-user.target

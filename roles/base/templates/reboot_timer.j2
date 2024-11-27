@@ -1,0 +1,8 @@
+[Unit]
+Description=Scheduled reboot
+
+[Timer]
+OnCalendar={{ reboot_schedule }}
+
+[Install]
+WantedBy=timers.target

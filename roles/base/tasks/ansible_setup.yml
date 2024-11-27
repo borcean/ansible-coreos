@@ -1,0 +1,39 @@
+- name: Ansible setup | Install package
+  community.general.rpm_ostree_pkg:
+    name: "{{ ansible_package }}"
+    state: present
+
+- name: Ansible setup | Ansible-refresh systemd service
+  ansible.builtin.copy:
+    src: ansible/{{ item.src }}
+    dest: /etc/systemd/system/{{ item.dest }}
+    owner: root
+    group: root
+    mode: '0640'
+  with_items:
+    - { src: 'ansible_refresh_service', dest: 'ansible-refresh.service' }
+
+- name: Ansible setup | Ansible-pull systemd service
+  ansible.builtin.template:
+    src: ansible/pull_service.j2
+    dest: /etc/systemd/system/ansible-pull.service
+    owner: root
+    group: root
+    mode: '0640'
+
+- name: Ansible setup | Ansible systemd timers
+  ansible.builtin.template:
+    src: ansible/timer.j2
+    dest: "/etc/systemd/system/ansible-{{ item.key }}.timer"
+    owner: root
+    group: root
+    mode: '0640'
+  with_dict: "{{ ansible_timers }}"
+
+- name: Ansible setup | Enable ansible systemd timers
+  ansible.builtin.systemd:
+    name: "ansible-{{ item.key }}.timer"
+    enabled: true
+    masked: false
+    daemon_reload: true
+  with_dict: "{{ ansible_timers }}"
