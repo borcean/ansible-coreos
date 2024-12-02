@@ -1,0 +1,33 @@
+---
+# Base | Reboot Schedule
+reboot_schedule: Sat 04:00
+
+# Server | Dreamhost DDNS
+dreamhost_ddns: {
+   enabled: 'true',
+   timer_boot: '180',
+   timer_active: '3600'
+}
+
+# Server | Docker
+docker_setting: {
+  data_dir: '{{zfs_pool.mountpoint}}/{{zfs_pool.pool_name}}/docker',
+  media_dir: '{{zfs_pool.mountpoint}}/{{zfs_pool.pool_name}}/media',
+  # data for docker env
+  PUID: '1000',
+  PGID: '1000'
+}
+
+# Server | ZFS
+zfs_pool: {
+   pool_name: 'data',
+   mountpoint: '/var',
+   disk1: '/dev/disk/by-id/scsi-SATA_ST10000NM0016-1T_ZA2C0YZ3',
+   disk2: '/dev/disk/by-id/scsi-SATA_ST10000NM0016-1T_ZA2C0H4S',
+}
+
+zfs_filesystems:
+   - {fs_name: 'backup'}
+   - {fs_name: 'docker'}
+   - {fs_name: 'media'}
+   - {fs_name: 'personal'}

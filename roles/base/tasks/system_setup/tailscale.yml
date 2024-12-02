@@ -1,0 +1,5 @@
+- name: System setup | Tailscale | Enable tailscaled
+  ansible.builtin.systemd:
+    name: tailscaled
+    enabled: true
+    state: started

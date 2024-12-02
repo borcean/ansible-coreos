@@ -1,0 +1,28 @@
+- name: Run base play
+  hosts: all
+  become: true
+  roles:
+    - base
+
+# - name: Run server play
+#   hosts: server
+#   become: true
+#   roles:
+#     - server
+
+- name: End of run cleanup and reporting
+  hosts: all
+  become: true
+  tasks:
+    - name: Send completion alert
+      ansible.builtin.include_tasks: playbooks/send_completion_alert.yml
+      tags: always
+      when:
+        - task_failed is not defined
+
+    - name: Send failure alert
+      ansible.builtin.include_tasks: playbooks/send_failure_alert.yml
+      tags: always
+      when:
+        - task_failed is defined
+        - task_failed | bool

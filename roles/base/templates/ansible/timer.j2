@@ -1,0 +1,8 @@
+[Unit]
+Description=Ansible {{ item.key }} timer
+
+[Timer]
+OnUnitActiveSec={{ item.value.timer_active }}
+
+[Install]
+WantedBy=timers.target

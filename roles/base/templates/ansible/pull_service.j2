@@ -1,0 +1,14 @@
+[Unit]
+Description=Ansible pull service
+Wants=network-online.target
+After=network-online.target
+Before=zincati.service
+ConditionPathExists=/usr/bin/ansible
+OnFailure=ansible-refresh.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/ansible-pull --vault-password-file={{ vault_file }} -o -U {{ repo }} -C {{ branch }}
+
+[Install]
+WantedBy=multi-user.target
