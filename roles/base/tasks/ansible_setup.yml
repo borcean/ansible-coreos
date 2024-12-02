@@ -1,7 +1,6 @@
 - name: Ansible setup | Install package
-  ansible.builtin.package:
-    name:
-      - ansible
+  community.general.rpm_ostree_pkg:
+    name: ansible
     state: present
 
 - name: Ansible setup | Ansible-refresh systemd service
