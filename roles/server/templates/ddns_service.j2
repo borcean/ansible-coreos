@@ -1,0 +1,6 @@
+[Unit]
+Description=Dreamhost Dynamic DNS service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/dreamhost_ddns.sh -k {{ dreamhost_api_key }} -r {{ ansible_nodename }}

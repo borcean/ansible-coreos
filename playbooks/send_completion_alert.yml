@@ -6,16 +6,4 @@
       chat_id: "{{ telegram_chat_id }}"
       parse_mode: "markdown"
       text: "✅  Provision finished on *{{ ansible_hostname }}*"
-  changed_when: False
-  when: not branch == "dev"
-
-- name: Send distribution and version via telegram
-  tags: always
-  community.general.telegram:
-    token: "{{ telegram_token }}"
-    api_args:
-      chat_id: "{{ telegram_chat_id }}"
-      parse_mode: "markdown"
-      text: "✅  Provision finished on *{{ ansible_hostname }}* {{ ansible_distribution }} {{ ansible_distribution_version }}"
-  changed_when: False
-  when: branch == "dev"
+  changed_when: false

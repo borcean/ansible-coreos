@@ -1,0 +1,14 @@
+[Unit]
+Description=Docker Container Maintenance
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+ExecStartPre=/usr/bin/docker compose --file /var/data/docker/compose/docker-compose.yml --env-file /var/data/docker/compose/.env pull
+ExecStartPre=/usr/bin/docker compose --file /var/data/docker/compose/docker-compose.yml --env-file /var/data/docker/compose/.env stop
+ExecStart=/usr/bin/docker compose --file /var/data/docker/compose/docker-compose.yml --env-file /var/data/docker/compose/.env up --detach --remove-orphans
+ExecStartPost=/usr/bin/docker image prune --force --all
+
+[Install]
+WantedBy=multi-user.target

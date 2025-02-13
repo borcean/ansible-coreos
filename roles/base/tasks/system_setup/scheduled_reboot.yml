@@ -5,7 +5,7 @@
     owner: root
     group: root
     mode: '0640'
-  notify: systemd_daemon_reload
+  notify: Systemd_Daemon_Reload
 
 - name: System setup | Install scheduled reboot timer
   ansible.builtin.template:
@@ -14,7 +14,7 @@
     owner: root
     group: root
     mode: '0640'
-  notify: systemd_daemon_reload
+  notify: Systemd_Daemon_Reload
 
 - name: System setup | Enable scheduled reboot timer
   ansible.builtin.systemd:

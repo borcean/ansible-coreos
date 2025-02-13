@@ -18,6 +18,12 @@ docker_setting: {
   PGID: '1000'
 }
 
+# Server | Container Runtime
+container_runtime: docker
+
+# Server | Continer Maintence
+container_maintenance_schedule: '*-*-* 5:00:00'
+
 # Server | ZFS
 zfs_pool: {
    pool_name: 'data',

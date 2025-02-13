@@ -1,0 +1,23 @@
+- name: Load distro-specific variables
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}_{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_distribution }}.yml"
+
+- name: Server configuration
+  block:
+    - name: Import tasks | Docker
+      ansible.builtin.import_tasks: docker.yml
+      when:
+        - container_runtime is defined
+        - container_runtime == 'docker'
+    # - name: Import tasks | Dreamhost DDNS
+    #   ansible.builtin.import_tasks: dreamhost_ddns.yml
+    #   when:
+    #     - dreamhost_ddns.enabled is defined
+    #     - dreamhost_ddns.enabled | bool
+
+  rescue:
+    - name: Set fact if task failed
+      ansible.builtin.set_fact:
+        task_failed: true

@@ -9,13 +9,11 @@
   # set up the ansible environment
     - name: Import tasks | Ansible setup
       ansible.builtin.import_tasks: ansible_setup.yml
-
     # # User configuration
     # - name: Include tasks | Additional users
     #   ansible.builtin.include_tasks: users/additional_users.yml
     #   with_dict: "{{ additional_users }}"
     #   when: additional_users is defined
-
     - name: Import tasks | OpenSSH configuration
       ansible.builtin.import_tasks: system_setup/openssh.yml
     - name: Import tasks | Tailscale
@@ -24,6 +22,9 @@
     - name: Import tasks | Scheduled reboot
       ansible.builtin.import_tasks: system_setup/scheduled_reboot.yml
       when: reboot_schedule is defined
+    - name: Import tasks | ZFS
+      ansible.builtin.import_tasks: system_setup/zfs.yml
+      when: zfs_pool.pool_name is defined
 
   rescue:
     - name: Set fact if task failed
