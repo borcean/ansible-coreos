@@ -1,0 +1,9 @@
+[Unit]
+Description=Dreamhost Dynamic DNS timer
+
+[Timer]
+OnBootSec={{ dreamhost_ddns.timer_boot }}
+OnUnitActiveSec={{ dreamhost_ddns.timer_active }}
+
+[Install]
+WantedBy=timers.target

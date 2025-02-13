@@ -1,0 +1,31 @@
+- name: ZFS | Import zpool
+  ansible.builtin.command: zpool import -d '{{ zfs_pool.disk1 }}'-part1 '{{ zfs_pool.pool_name }}'
+  register: result
+  failed_when: false
+  changed_when: result.rc == 0
+
+- name: ZFS | Gather space usage about all imported ZFS pools
+  community.general.zpool_facts:
+
+- name: ZFS | Create two-disk mirror {{ zfs_pool.pool_name }}
+  ansible.builtin.command: >
+    zpool create -o ashift=12
+    -m "{{ zfs_pool.mountpoint }}/{{ zfs_pool.pool_name }}"
+    "{{ zfs_pool.pool_name }}" mirror "{{ zfs_pool.disk1 }}" "{{ zfs_pool.disk2 }}"
+  register: result
+  changed_when: result.rc == 0
+  when: >
+    not (ansible_zfs_pools | length > 0 and
+         ansible_zfs_pools[0].name == zfs_pool.pool_name)
+
+- name: ZFS | Create filesystems
+  community.general.zfs:
+    name: '{{ zfs_pool.pool_name }}/{{ item.fs_name }}'
+    state: present
+  with_items:
+    "{{ zfs_filesystems }}"
+
+- name: ZFS | Enable weekly scub
+  ansible.builtin.systemd:
+    name: "zfs-scrub-weekly@{{ zfs_pool.pool_name }}.timer"
+    enabled: true

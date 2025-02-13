@@ -4,11 +4,11 @@
   roles:
     - base
 
-# - name: Run server play
-#   hosts: server
-#   become: true
-#   roles:
-#     - server
+- name: Run server play
+  hosts: server
+  become: true
+  roles:
+    - server
 
 - name: End of run cleanup and reporting
   hosts: all

@@ -1,0 +1,79 @@
+- name: Load vpn credentials variables
+  ansible.builtin.include_vars: vpn_credentials.yml
+
+- name: Docker | Enable service and socket
+  ansible.builtin.systemd:
+    name: "docker.{{ item }}"
+    enabled: true
+    state: started
+  loop:
+    - socket
+    - service
+
+- name: Docker | Add users to docker group
+  ansible.builtin.user:
+    name: "{{ item }}"
+    groups: docker
+    append: true
+  loop:
+    - core
+
+- name: Docker | Set permissions for docker data filesystem
+  ansible.builtin.file:
+    path: "{{ docker_setting.data_dir }}"
+    state: directory
+    owner: '1000'
+    group: '1000'
+    mode: '0755'
+
+- name: Docker | Create directories
+  ansible.builtin.file:
+    path: '{{ zfs_pool.mountpoint }}/{{ zfs_pool.pool_name }}/docker/{{ item.dir }}'
+    state: directory
+    owner: '1000'
+    group: '1000'
+    mode: '0755'
+  with_items:
+    - { dir: 'config' }
+    - { dir: 'compose' }
+
+- name: Docker | Setup docker .env file
+  ansible.builtin.template:
+    src: docker/env.j2
+    dest: '{{ zfs_pool.mountpoint }}/{{ zfs_pool.pool_name }}/docker/compose/.env'
+    owner: '1000'
+    group: '1000'
+    mode: '0644'
+
+- name: Docker | Copy docker-compose.yml
+  ansible.builtin.template:
+    src: docker/compose.yml
+    dest: '{{ zfs_pool.mountpoint }}/{{ zfs_pool.pool_name }}/docker/compose/docker-compose.yml'
+    owner: '1000'
+    group: '1000'
+    mode: '0644'
+
+- name: Docker | Start containers
+  ansible.builtin.command: docker compose up -d --remove-orphans
+  args:
+    chdir: '{{ zfs_pool.mountpoint }}/{{ zfs_pool.pool_name }}/docker/compose'
+  register: cmd_dcu
+  changed_when: '"Start" in cmd_dcu.stderr'
+
+- name: Docker | Install container maintenance systemd service
+  ansible.builtin.template:
+    src: "docker/container_maintenance_{{ item }}.j2"
+    dest: "/etc/systemd/system/docker-container-maintenance.{{ item }}"
+    owner: root
+    group: root
+    mode: '0640'
+  loop:
+    - service
+    - timer
+
+- name: Docker | Enable container maintenance
+  ansible.builtin.systemd:
+    name: docker-container-maintenance.timer
+    enabled: true
+    masked: false
+    daemon_reload: true
