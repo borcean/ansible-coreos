@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<service>
+  <short>jackett</short>
+  <description>Jackett - API Support for your favorite torrent trackers</description>
+  <port protocol="tcp" port="9117"/>
+</service>

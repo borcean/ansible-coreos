@@ -1,0 +1,9 @@
+[Unit]
+Description=Docker container maintenance timer
+
+[Timer]
+OnCalendar=*-*-* 5:00:00
+Persist=true
+
+[Install]
+WantedBy=timers.target

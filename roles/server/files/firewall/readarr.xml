@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<service>
+  <short>readarr</short>
+  <description>Readarr Download Service</description>
+  <port protocol="tcp" port="7878"/>
+</service>
