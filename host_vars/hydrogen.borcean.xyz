@@ -18,12 +18,15 @@ docker_setting: {
   PGID: '1000'
 }
 
+# Server | Continer Maintence
+container_maintenance_schedule: '*-*-* 5:00:00'
+
 # Server | ZFS
 zfs_pool: {
    pool_name: 'data',
    mountpoint: '/var',
-   disk1: '/dev/sdb',
-   disk2: '/dev/sdc',
+   disk1: '/dev/disk/by-id/usb-USB_SanDisk_3.2Gen1_03008517041921200719-0:0',
+   disk2: '/dev/disk/by-id/usb-USB_SanDisk_3.2Gen1_03008714041921224432-0:0'
 }
 
 zfs_filesystems:

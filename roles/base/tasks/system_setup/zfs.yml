@@ -6,9 +6,6 @@
 
 - name: ZFS | Gather space usage about all imported ZFS pools
   community.general.zpool_facts:
-    properties:
-      - free
-      - size
 
 - name: ZFS | Print gathered information (debug)
   ansible.builtin.debug:
@@ -23,7 +20,7 @@
 - name: ZFS | Create two-disk mirror {{ zfs_pool.pool_name }}
   ansible.builtin.command: >
     zpool create -o ashift=12
-    -o mountpoint="{{ zfs_pool.mountpoint }}/{{ zfs_pool.pool_name }}"
+    -m "{{ zfs_pool.mountpoint }}/{{ zfs_pool.pool_name }}"
     "{{ zfs_pool.pool_name }}" mirror "{{ zfs_pool.disk1 }}" "{{ zfs_pool.disk2 }}"
   register: result
   changed_when: result.rc == 0

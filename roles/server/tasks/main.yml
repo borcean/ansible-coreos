@@ -6,9 +6,6 @@
 
 - name: Server configuration
   block:
-    - name: Import tasks | ZFS
-      ansible.builtin.import_tasks: system_setup/zfs.yml
-      when: zfs_pool.pool_name is defined
     - name: Import tasks | Docker
       ansible.builtin.import_tasks: docker/docker.yml
     - name: Import tasks | Dreamhost DDNS
