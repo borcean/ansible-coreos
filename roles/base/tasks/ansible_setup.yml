@@ -1,6 +1,6 @@
 - name: Ansible setup | Install package
   community.general.rpm_ostree_pkg:
-    name: "{{ ansible_package }}"
+    name: "{{ base_ansible_package }}"
     state: present
 
 - name: Ansible setup | Ansible-refresh systemd service

@@ -1,6 +1,2 @@
-ansible_package: ansible
-openssh_package: openssh
-openssh_service: sshd
-powerline_fonts_package: powerline-fonts
-python_psutil_package: python3-psutil
-vim_package: vim-enhanced
+base_ansible_package: ansible
+base_openssh_service: sshd
