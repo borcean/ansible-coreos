@@ -11,11 +11,11 @@
       when:
         - container_runtime is defined
         - container_runtime == 'docker'
-    # - name: Import tasks | Dreamhost DDNS
-    #   ansible.builtin.import_tasks: dreamhost_ddns.yml
-    #   when:
-    #     - dreamhost_ddns.enabled is defined
-    #     - dreamhost_ddns.enabled | bool
+    - name: Import tasks | Dreamhost DDNS
+      ansible.builtin.import_tasks: dreamhost_ddns.yml
+      when:
+        - dreamhost_ddns.enabled is defined
+        - dreamhost_ddns.enabled | bool
 
   rescue:
     - name: Set fact if task failed
