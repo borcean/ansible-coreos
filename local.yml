@@ -14,6 +14,10 @@
   hosts: all
   become: true
   tasks:
+    - name: Send OSTree pending deployment alert
+      ansible.builtin.include_tasks: playbooks/send_pending_deployment_alert.yml
+      tags: always
+
     - name: Send completion alert
       ansible.builtin.include_tasks: playbooks/send_completion_alert.yml
       tags: always

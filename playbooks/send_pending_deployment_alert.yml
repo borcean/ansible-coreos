@@ -1,0 +1,14 @@
+- name: Check if deployment pending reboot
+  ansible.builtin.shell: set -o pipefail && rpm-ostree status --json | jq .deployments[0].booted
+  register: deployment_booted
+  changed_when: false
+
+- name: Notify if OSTree deployment pending reboot
+  community.general.telegram:
+    token: "{{ telegram_token }}"
+    api_args:
+      chat_id: "{{ telegram_chat_id }}"
+      parse_mode: "markdown"
+      text: "🔄  OSTree deployment pending reboot on *{{ ansible_hostname }}*"
+  changed_when: false
+  when: not deployment_booted.stdout | bool
