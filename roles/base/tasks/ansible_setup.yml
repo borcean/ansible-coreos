@@ -2,6 +2,10 @@
   community.general.rpm_ostree_pkg:
     name: "{{ base_ansible_package }}"
     state: present
+  register: rpm_ostree_pkg
+  retries: 10
+  delay: 30
+  when: false
 
 - name: Ansible setup | Ansible-refresh systemd service
   ansible.builtin.copy:
