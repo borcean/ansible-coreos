@@ -6,10 +6,11 @@
 
 - name: Base configuration
   block:
-  # set up the ansible environment
     - name: Import tasks | Ansible setup
       ansible.builtin.import_tasks: ansible_setup.yml
     # # User configuration
+    - name: Import tasks | Configure core user
+      ansible.builtin.import_tasks: users/core.yml
     # - name: Include tasks | Additional users
     #   ansible.builtin.include_tasks: users/additional_users.yml
     #   with_dict: "{{ additional_users }}"
@@ -22,6 +23,9 @@
     - name: Import tasks | Scheduled reboot
       ansible.builtin.import_tasks: system_setup/scheduled_reboot.yml
       when: reboot_schedule is defined
+    - name: Import tasks | Automatic updates
+      ansible.builtin.import_tasks: system_setup/automatic_updates.yml
+      when: automatic_updates.enabled | bool
     - name: Import tasks | ZFS
       ansible.builtin.import_tasks: system_setup/zfs.yml
       when: zfs_pool.pool_name is defined

@@ -1,0 +1,11 @@
+- name: Users | Update password for core user
+  ansible.builtin.user:
+    name: core
+    password: "{{ users.core.password }}"
+  when: users.core.password is defined
+
+- name: Users | Update SSH public key for core user
+  ansible.posix.authorized_key:
+    user: core
+    key: "{{ users.core.ssh_public_keys }}"
+  when: users.core.ssh_public_keys is defined

@@ -1,8 +1,11 @@
 ---
 - name: Restart_SSHD
   ansible.builtin.service:
-    name: "{{ openssh_service }}"
+    name: "{{ base_openssh_service }}"
     state: restarted
+
+- name: RPM-OSTree_Reload
+  ansible.builtin.command: rpm-ostree reload
 
 - name: Systemd_Daemon_Reload
   ansible.builtin.systemd:

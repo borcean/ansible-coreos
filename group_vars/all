@@ -42,7 +42,15 @@ ansible_timers:
    pull:
       timer_active: 30m
 
-automatic_updates: true
+# users:
+#    core:
+#       password:
+#       ssh_public_keys: https://github.com/borcean.keys
+
+automatic_updates: {
+   enabled: 'true',
+   policy: 'stage'
+}
 
 sshd: true
 
