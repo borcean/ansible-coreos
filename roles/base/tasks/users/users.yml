@@ -1,0 +1,30 @@
+- name: Users | Create/update account for {{ user_item.key }}
+  ansible.builtin.user:
+    name: "{{ user_item.key }}"
+    password: "{{ user_item.value.password }}"
+  when: user_item.value.password is defined
+
+- name: Users | Update SSH public key for {{ user_item.key }}
+  ansible.posix.authorized_key:
+    user: "{{ user_item.key }}"
+    key: "{{ user_item.value.ssh_public_keys }}"
+  when: user_item.value.ssh_public_keys is defined
+
+- name: Users | Append groups for {{ user_item.key }}
+  ansible.builtin.user:
+    name: "{{ user_item.key }}"
+    groups: "{{ user_item.value.groups_append }}"
+    append: true
+  when: user_item.value.groups_append is defined
+
+- name: Users | Set comment for {{ user_item.key }}
+  ansible.builtin.user:
+    name: "{{ user_item.key }}"
+    comment: "{{ user_item.value.comment }}"
+  when: user_item.value.comment is defined
+
+- name: Users | User specific tasks for {{ user_item.key }}
+  ansible.builtin.include_tasks: "{{ user_item.key }}.yml"
+  when:
+    - user_item.value.custom_tasks is defined
+    - user_item.value.custom_tasks | bool

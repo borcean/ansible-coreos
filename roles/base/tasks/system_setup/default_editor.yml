@@ -1,0 +1,8 @@
+- name: Set vi as the default editor
+  ansible.builtin.copy:
+    dest: /etc/profile.d/zz-default-editor.sh
+    content: |
+      export EDITOR=vi
+    owner: root
+    group: root
+    mode: '0644'
