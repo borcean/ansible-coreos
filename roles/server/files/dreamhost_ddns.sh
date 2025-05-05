@@ -11,52 +11,9 @@
 # Additional changes and updates as noted via https://github.com/jgabello/dreamhost-dynamic-dns Copyright (c) 2014, Contributing Author
 # See LICENSE for more details.
 
-CONFIG_DIR="${XDG_CONFIG_HOME:=$HOME/.config}/dreamhost-dynamicdns" && mkdir -p $CONFIG_DIR && chmod 0700 $CONFIG_DIR
-CONFIG_FILE="$CONFIG_DIR/config.sh"
-
-if [ -f $HOME/.config/dynamicdns ]; then
-  echo "Migrating to new config location."
-  mv $HOME/.config/dynamicdns $CONFIG_FILE
-fi
 
 function usage {
   echo 'usage:  ' `basename $0` '[-Sdv][-k API Key] [-r Record] [-i New IP Address] [-L Logging (true/false)]'
-}
-
-function createConfigurationFile {
-  umask 077
-  cat << EOF > $CONFIG_FILE
-# Dreamhost Dynamic DNS Updater Configuration file.  This file
-# allows you to set the basic parameters to update Dreamhost
-# dynamic dns without command line options.
-# There are three basic parameters:
-#
-# KEY
-# This parameter is your Dreamhost API Key.  The parameter should
-# be specified as a STRING.  Your API KEY must be given the the
-# following permissions in the Dreamhost webpanel:
-# - dns-list_records
-# - dns-remove_record
-# - dns-add_record
-
-KEY=
-
-# RECORD
-# This parameter specifies which DNS A record you wish to update
-# with this script.
-
-RECORD=
-
-# LOGGING
-# Logging enables script output to the system log in OSX or Linux
-# This parameter accepts a BOOLEAN.  By default this parameter is
-# set to "true".
-#
-
-LOGGING=true
-EOF
-
-  return 0
 }
 
 function logStatus {
@@ -73,30 +30,6 @@ function logStatus {
   fi
   if [ $VERBOSE = "true" ]; then
     echo `basename $0` "$MESSAGE"
-  fi
-  return 0
-}
-
-function saveConfiguration {
-  if [ -n "$1" ]; then
-    sed -i -e "s/^KEY=.*$/KEY=$1/" "$CONFIG_FILE"
-    if [ $VERBOSE = "true" ]; then
-      echo "Saving KEY to configuration file"
-    fi
-  fi
-
-  if [ -n "$2" ]; then
-    sed -i -e "s/^RECORD=.*$/RECORD=$2/" "$CONFIG_FILE"
-    if [ $VERBOSE = "true" ]; then
-      echo "Saving RECORD to configuration file"
-    fi
-
-  fi
-  if [ -n "$3" ]; then
-    sed -i -e "s/^LOGGING=.*$/LOGGING=$3/" "$CONFIG_FILE"
-    if [ $VERBOSE = "true" ]; then
-      echo "Saving LOGGING to configuration file"
-    fi
   fi
   return 0
 }
@@ -160,17 +93,6 @@ do
     ;;
   esac
 done
-
-#Check for Configuration File
-
-if [ ! -f $CONFIG_FILE ]; then
-  logStatus "notice" "Configuration File Not Found. Creating new configuration file."
-  createConfigurationFile
-fi
-
-# Load Configuration File
-
-source $CONFIG_FILE
 
 # check for dependencies, if wget not available, test for curl, set variable to be used to test this later
 if command -v wget >/dev/null 2>&1; then
