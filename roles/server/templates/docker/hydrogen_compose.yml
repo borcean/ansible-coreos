@@ -1,0 +1,10 @@
+version: "3.5"
+services:
+  nginx:
+    container_name: hello-world
+    image: docker.io/library/hello-world:latest
+    restart: unless-stopped
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
