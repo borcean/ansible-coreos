@@ -26,9 +26,6 @@
     - name: Import tasks | Automatic updates
       ansible.builtin.import_tasks: system_setup/automatic_updates.yml
       when: automatic_updates.enabled | bool
-    - name: Import tasks | ZFS
-      ansible.builtin.import_tasks: system_setup/zfs.yml
-      when: zfs_pool.pool_name is defined
 
   rescue:
     - name: Set fact if task failed
