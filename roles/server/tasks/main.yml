@@ -6,11 +6,11 @@
 
 - name: Server configuration
   block:
-    - name: Import tasks | Docker
-      ansible.builtin.import_tasks: docker.yml
-      when:
-        - container_runtime is defined
-        - container_runtime == 'docker'
+    # - name: Import tasks | Docker
+    #   ansible.builtin.import_tasks: docker.yml
+    #   when:
+    #     - container_runtime is defined
+    #     - container_runtime == 'docker'
     - name: Import tasks | Dreamhost DDNS
       ansible.builtin.import_tasks: dreamhost_ddns.yml
       when:
