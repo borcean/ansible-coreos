@@ -28,8 +28,8 @@ container_maintenance_schedule: '*-*-* 5:00:00'
 zfs_pool: {
    pool_name: 'data',
    mountpoint: '/var',
-   disk1: '/dev/disk/by-id/scsi-SATA_ST10000NM0016-1T_ZA2C0YZ3',
-   disk2: '/dev/disk/by-id/scsi-SATA_ST10000NM0016-1T_ZA2C0H4S',
+   disk1: '/dev/disk/by-id/ata-ST10000NM0016-1TT101_ZA2C0YZ3',
+   disk2: '/dev/disk/by-id/ata-ST10000NM0016-1TT101_ZA2C0H4S',
 }
 
 zfs_filesystems:
