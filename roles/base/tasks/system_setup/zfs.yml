@@ -2,7 +2,7 @@
   community.general.zpool_facts:
 
 - name: ZFS | Import pool if not already imported
-  ansible.builtin.command: zpool import "{{ zfs_pool.pool_name }}"
+  ansible.builtin.command: zpool import '{{ zfs_pool.pool_name }}'
   when: zfs_pool.pool_name not in ansible_zfs_pools
   changed_when: true
   register: import_result

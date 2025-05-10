@@ -2,6 +2,7 @@
 Description=Docker Container Maintenance
 After=docker.service
 Requires=docker.service
+ConditionPathIsDirectory=/var/data/docker
 
 [Service]
 Type=oneshot

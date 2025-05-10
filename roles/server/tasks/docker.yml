@@ -15,6 +15,16 @@
   loop:
     - core
 
+- name: Docker | Check if dataset exists
+  ansible.builtin.stat:
+    path: '{{ zfs_pool.mountpoint }}/{{ zfs_pool.pool_name }}/docker'
+  register: docker_pool
+
+- name: Docker | Fail if dataset does not exist
+  ansible.builtin.fail:
+    msg: "Dataset for docker does not exist. Has the zpool been imported?"
+  when: not docker_pool.stat.exists
+
 - name: Docker | Set permissions for docker data filesystem
   ansible.builtin.file:
     path: "{{ docker_setting.data_dir }}"
