@@ -1,8 +1,16 @@
-- name: ZFS | Import zpool
-  ansible.builtin.command: zpool import -d '{{ zfs_pool.disk1 }}'-part1 '{{ zfs_pool.pool_name }}'
-  register: result
-  failed_when: false
-  changed_when: result.rc == 0
+- name: ZFS | Gather information about imported ZFS pools
+  community.general.zpool_facts:
+
+- name: ZFS | Import pool if not already imported
+  ansible.builtin.command: zpool import "{{ zfs_pool.pool_name }}"
+  when: zfs_pool.pool_name not in ansible_zfs_pools
+  changed_when: true
+  register: import_result
+
+- name: ZFS | Notify success of pool import
+  ansible.builtin.debug:
+    msg: "ZFS pool {{zfs_pool.pool_name}} was successfully imported."
+  when: import_result is defined and import_result.rc == 0
 
 - name: ZFS | Gather space usage about all imported ZFS pools
   community.general.zpool_facts:
