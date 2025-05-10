@@ -22,7 +22,7 @@ docker_setting: {
 container_runtime: docker
 
 # Server | Continer Maintence
-container_maintenance_schedule: *-*-* 5:00:00
+container_maintenance_schedule: '*-*-* 5:00:00'
 
 # Server | ZFS
 zfs_pool: {
