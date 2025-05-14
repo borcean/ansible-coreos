@@ -15,6 +15,9 @@
         loop_var: user_item
     - name: Import tasks | OpenSSH configuration
       ansible.builtin.import_tasks: system_setup/openssh.yml
+    - name: Import tasks | Firewall
+      ansible.builtin.import_tasks: system_setup/firewall.yml
+      when: firewalld_default_zone is defined
     - name: Import tasks | Default editor
       ansible.builtin.import_tasks: system_setup/default_editor.yml
     - name: Import tasks | Tailscale
