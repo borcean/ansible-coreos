@@ -1,0 +1,4 @@
+- name: System Setup | Firewall | Set default zone as {{ firewalld_default_zone }}
+  ansible.builtin.command: firewall-cmd '--set-default-zone={{ firewalld_default_zone }}'
+  register: set_default_zone
+  changed_when: '"ZONE_ALREADY_SET" not in set_default_zone.stderr'

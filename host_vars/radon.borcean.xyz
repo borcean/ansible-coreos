@@ -2,6 +2,9 @@
 # Base | Reboot Schedule
 reboot_schedule: Sat 04:00
 
+# Base | Firewall Default Zone
+firewalld_default_zone: FedoraWorkstation
+
 # Server | Dreamhost DDNS
 dreamhost_ddns: {
    enabled: 'true',
