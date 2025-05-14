@@ -26,3 +26,4 @@
 
 - name: Ansible job failed, clear cache to trigger another provision run
   ansible.builtin.command: systemd-run --on-active=10s systemctl start ansible-refresh.service
+  changed_when: false
