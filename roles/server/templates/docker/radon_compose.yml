@@ -7,7 +7,7 @@ services:
       - NET_ADMIN
     restart: unless-stopped
     volumes:
-      - ${DATADIR}/config/gluetun:/gluetun
+      - ${DATADIR}/config/gluetun:/gluetun:z
     ports:
       - 8112:8112
     environment:
@@ -27,8 +27,8 @@ services:
       - PGID=${PGID} # default group id, defined in .env
       - TZ=${TZ} # timezone, defined in .env
     volumes:
-      - ${MEDIADIR}/downloads:/downloads # downloads folder
-      - ${DATADIR}/config/deluge:/config # config files
+      - ${MEDIADIR}/downloads:/downloads:z # downloads folder
+      - ${DATADIR}/config/deluge:/config:z # config files
 
   jackett:
     container_name: jackett
@@ -41,8 +41,8 @@ services:
       - TZ=${TZ} # timezone, defined in .env
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - ${MEDIADIR}/downloads/torrent-blackhole:/downloads # place where to put .torrent files for manual download
-      - ${DATADIR}/config/jackett:/config # config files
+      - ${MEDIADIR}/downloads/torrent-blackhole:/downloads:z # place where to put .torrent files for manual download
+      - ${DATADIR}/config/jackett:/config:z # config files
 
   sonarr:
     container_name: sonarr
@@ -55,9 +55,9 @@ services:
       - TZ=${TZ} # timezone, defined in .env
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - ${DATADIR}/config/sonarr:/config # config files
-      - ${MEDIADIR}/tv:/tv # tv shows folder
-      - ${MEDIADIR}/downloads:/downloads # download folder
+      - ${DATADIR}/config/sonarr:/config:z # config files
+      - ${MEDIADIR}/tv:/tv:z # tv shows folder
+      - ${MEDIADIR}/downloads:/downloads:z # download folder
 
   radarr:
     container_name: radarr
@@ -70,9 +70,9 @@ services:
       - TZ=${TZ} # timezone, defined in .env
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - ${DATADIR}/config/radarr:/config # config files
-      - ${MEDIADIR}/movies:/movies # movies folder
-      - ${MEDIADIR}/downloads:/downloads # download folder
+      - ${DATADIR}/config/radarr:/config:z # config files
+      - ${MEDIADIR}/movies:/movies:z # movies folder
+      - ${MEDIADIR}/downloads:/downloads:z # download folder
 
   readarr:
     image: lscr.io/linuxserver/readarr:develop
@@ -84,9 +84,9 @@ services:
       - PGID=${PGID} # default group id, defined in .env
       - TZ=${TZ} # timezone, defined in .env
     volumes:
-      - ${DATADIR}/config/readarr:/config # config files
-      - ${MEDIADIR}/books:/books # books folder
-      - ${MEDIADIR}/downloads:/downloads # download folder
+      - ${DATADIR}/config/readarr:/config:z # config files
+      - ${MEDIADIR}/books:/books:z # books folder
+      - ${MEDIADIR}/downloads:/downloads:z # download folder
     ports:
       - 8787:8787
 
@@ -100,7 +100,7 @@ services:
       - PGID=${PGID} # default group id, defined in .env
       - TZ=${TZ} # timezone, defined in .env
     volumes:
-      - ${DATADIR}/config/prowlarr:/config # config files
+      - ${DATADIR}/config/prowlarr:/config:z # config files
 
   plex-server:
     container_name: plex-server
@@ -110,10 +110,10 @@ services:
       - TZ=${TZ} # timezone, defined in .env
     network_mode: host
     volumes:
-      - ${DATADIR}/config/plex/db:/config # plex database
-      - ${DATADIR}/config/plex/transcode:/transcode # temp transcoded files
-      - ${MEDIADIR}/tv:/tv # media library
-      - ${MEDIADIR}/movies:/movies # media library
+      - ${DATADIR}/config/plex/db:/config:z # plex database
+      - ${DATADIR}/config/plex/transcode:/transcode:z # temp transcoded files
+      - ${MEDIADIR}/tv:/tv:z # media library
+      - ${MEDIADIR}/movies:/movies:z # media library
 
   bazarr:
     container_name: bazarr
@@ -126,15 +126,15 @@ services:
       - TZ=${TZ} # timezone, defined in .env
       - UMASK_SET=022 #optional
     volumes:
-      - ${DATADIR}/config/bazarr:/config # config files
-      - ${MEDIADIR}/movies:/movies # movies folder
-      - ${MEDIADIR}/tv:/tv # tv shows folder
+      - ${DATADIR}/config/bazarr:/config:z # config files
+      - ${MEDIADIR}/movies:/movies:z # movies folder
+      - ${MEDIADIR}/tv:/tv:z # tv shows folder
 
   homeassistant:
     container_name: homeassistant
     image: "ghcr.io/home-assistant/home-assistant:stable"
     volumes:
-      - ${DATADIR}/config/homeassitant:/config
+      - ${DATADIR}/config/homeassitant:/config:z
       - /etc/localtime:/etc/localtime:ro
     restart: unless-stopped
     privileged: true
@@ -146,4 +146,4 @@ services:
     network_mode: host
     image: koush/scrypted
     volumes:
-      - ${DATADIR}/config/scrypted:/server/volume
+      - ${DATADIR}/config/scrypted:/server/volume:z
