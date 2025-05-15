@@ -25,6 +25,12 @@
     group: root
     mode: '0640'
 
+- name: Ansible setup | Enable ansible service units
+  ansible.builtin.systemd:
+    name: "ansible-{{ item.key }}.service"
+    enabled: true
+  with_dict: "{{ ansible_timers }}"
+
 - name: Ansible setup | Ansible systemd timers
   ansible.builtin.template:
     src: ansible/timer.j2
