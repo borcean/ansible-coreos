@@ -40,7 +40,11 @@ vault_file: /root/.ansible_vault_key
 
 ansible_timers:
    pull:
-      timer_active: 30m
+      timer_boot: 5m
+      timer_active: 10m
+   refresh:
+      timer_boot: 10s
+      timer_active: 12h
 
 users:
    core:
