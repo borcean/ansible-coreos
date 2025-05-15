@@ -33,6 +33,7 @@ zfs_pool: {
    mountpoint: '/var',
    disk1: '/dev/disk/by-id/ata-ST10000NM0016-1TT101_ZA2C0YZ3',
    disk2: '/dev/disk/by-id/ata-ST10000NM0016-1TT101_ZA2C0H4S',
+   create: 'false'
 }
 
 zfs_filesystems:
