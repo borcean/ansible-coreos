@@ -59,6 +59,7 @@
     owner: '1000'
     group: '1000'
     mode: '0644'
+  register: update_docker_compose
 
 - name: Docker | Start containers
   ansible.builtin.command: docker compose up -d --remove-orphans
@@ -66,6 +67,7 @@
     chdir: '{{ zfs_pool.mountpoint }}/{{ zfs_pool.pool_name }}/docker/compose'
   register: cmd_dcu
   changed_when: '"Start" in cmd_dcu.stderr'
+  when: update_docker_compose.changed
 
 - name: Docker | Install container maintenance systemd service
   ansible.builtin.template:
