@@ -3,7 +3,7 @@ Description=Docker container maintenance timer
 
 [Timer]
 OnCalendar={{ container_maintenance_schedule }}
-Persist=true
+Persistent=true
 
 [Install]
 WantedBy=timers.target
