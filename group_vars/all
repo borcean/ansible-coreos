@@ -34,7 +34,7 @@ vpn_client_password: !vault |
 
 repo: https://github.com/borcean/ansible-coreos.git
 
-branch: main
+branch: bluefin
 
 vault_file: /root/.ansible_vault_key
 

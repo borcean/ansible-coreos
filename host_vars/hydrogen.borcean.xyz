@@ -1,45 +1,20 @@
----
-# Base | Reboot Schedule
-reboot_schedule: Sat 04:00
+users:
+   jeffrey:
+      password: !vault |
+               $ANSIBLE_VAULT;1.1;AES256
+               33623434373933346663396131333937323637366134346263326561323930373339393630336264
+               3033656637633133393362633439353534306436663133650a636430646637346564353566616130
+               65353130633439373165323765383334376335623132306664383636653638396561376330633036
+               6561373663663231390a353936663065353263643764643835393662373638646331323032376261
+               34333464373833303964643434376564643162666230306534333835613238633465313630333437
+               34353762363232393039613631333764663163613361616433386132313930313639646361633737
+               36353866343330353235363538353835353663626439323339326232633931633365666366363663
+               37336265373262643739
+      comment: Jeffrey Borcean
+      ssh_public_keys: https://github.com/borcean.keys
+      custom_tasks: true
 
-# Base | Automatic Updates
+# Use Bluefin's default daily update schedule
 automatic_updates: {
-   enabled: 'true',
-   policy: 'apply'
+   enabled: 'false',
 }
-
-# Server | Dreamhost DDNS
-dreamhost_ddns: {
-   enabled: 'true',
-   timer_boot: '180',
-   timer_active: '3600'
-}
-
-# Server | Docker
-docker_setting: {
-  data_dir: '{{zfs_pool.mountpoint}}/{{zfs_pool.pool_name}}/docker',
-  media_dir: '{{zfs_pool.mountpoint}}/{{zfs_pool.pool_name}}/media',
-  # data for docker env
-  PUID: '1000',
-  PGID: '1000'
-}
-
-# Server | Container Maintence
-container_maintenance_schedule: '*-*-* 5:00:00'
-
-# Server | Container Runtime
-container_runtime: docker
-
-# Server | ZFS
-zfs_pool: {
-   pool_name: 'data',
-   mountpoint: '/var',
-   disk1: '/dev/disk/by-id/usb-USB_SanDisk_3.2Gen1_03008517041921200719-0:0',
-   disk2: '/dev/disk/by-id/usb-USB_SanDisk_3.2Gen1_03008714041921224432-0:0'
-}
-
-zfs_filesystems:
-   - {fs_name: 'backup'}
-   - {fs_name: 'docker'}
-   - {fs_name: 'media'}
-   - {fs_name: 'personal'}

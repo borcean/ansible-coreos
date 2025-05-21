@@ -2,13 +2,15 @@
 Description=Ansible pull service
 Wants=network-online.target
 After=network-online.target
-Before=zincati.service
-ConditionPathExists=/usr/bin/ansible
 OnFailure=ansible-refresh.service
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/ansible-pull --vault-password-file={{ vault_file }} -o -U {{ repo }} -C {{ branch }}
+Environment=HOMEBREW_PREFIX="/var/home/linuxbrew/.linuxbrew/Homebrew"
+Environment=HOMEBREW_CELLAR="/var/home/linuxbrew/.linuxbrew/Homebrew/Cellar"
+Environment=HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew"
+Environment=PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:/usr/local/bin:/usr/bin"
+ExecStart=/usr/sbin/bash -c "ansible-pull --vault-password-file={{ vault_file }} -o -U {{ repo }} -C {{ branch }}"
 
 [Install]
 WantedBy=multi-user.target

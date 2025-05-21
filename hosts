@@ -1,7 +1,8 @@
 [base]
-hydrogen.borcean.xyz
-radon.borcean.xyz
 
 [server]
-hydrogen.borcean.xyz
+deuterium.borcean.xyz
 radon.borcean.xyz
+
+[workstation]
+hydrogen.borcean.xyz
