@@ -75,22 +75,6 @@ services:
       - ${MEDIADIR}/movies:/movies:z # movies folder
       - ${MEDIADIR}/downloads:/downloads:z # download folder
 
-  readarr:
-    image: lscr.io/linuxserver/readarr:develop
-    container_name: readarr
-    restart: unless-stopped
-    network_mode: host
-    environment:
-      - PUID=${PUID} # default user id, defined in .env
-      - PGID=${PGID} # default group id, defined in .env
-      - TZ=${TZ} # timezone, defined in .env
-    volumes:
-      - ${DATADIR}/config/readarr:/config:z # config files
-      - ${MEDIADIR}/books:/books:z # books folder
-      - ${MEDIADIR}/downloads:/downloads:z # download folder
-    ports:
-      - 8787:8787
-
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
     container_name: prowlarr
