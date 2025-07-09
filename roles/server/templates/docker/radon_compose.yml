@@ -96,6 +96,7 @@ services:
       - TZ=${TZ}
     volumes:
       - ${DATADIR}/config/tautulli:/config:z
+    network_mode: host
     ports:
       - 8181:8181
     restart: unless-stopped
