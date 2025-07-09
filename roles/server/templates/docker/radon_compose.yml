@@ -86,6 +86,19 @@ services:
       - TZ=${TZ} # timezone, defined in .env
     volumes:
       - ${DATADIR}/config/prowlarr:/config:z # config files
+  
+  tautulli:
+    image: lscr.io/linuxserver/tautulli:latest
+    container_name: tautulli
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${DATADIR}/config/tautulli:/config:z
+    ports:
+      - 8181:8181
+    restart: unless-stopped
 
   plex-server:
     container_name: plex-server
