@@ -18,7 +18,7 @@ services:
 
   deluge:
     container_name: deluge
-    image: lscr.io/linuxserver/deluge:latest
+    image: lscr.io/linuxserver/deluge:2.2.0-r1-ls364
     restart: unless-stopped
     network_mode: service:gluetun # run on the vpn network
     environment:
@@ -86,7 +86,7 @@ services:
       - TZ=${TZ} # timezone, defined in .env
     volumes:
       - ${DATADIR}/config/prowlarr:/config:z # config files
-  
+
   tautulli:
     image: lscr.io/linuxserver/tautulli:latest
     container_name: tautulli
