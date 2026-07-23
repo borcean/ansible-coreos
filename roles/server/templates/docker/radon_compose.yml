@@ -146,3 +146,13 @@ services:
     image: koush/scrypted
     volumes:
       - ${DATADIR}/config/scrypted:/server/volume:z
+  
+  pinchflat:
+    image: ghcr.io/kieraneglin/pinchflat:latest
+    environment:
+      - TZ=${TZ} # timezone, defined in .env
+    ports:
+      - '8945:8945'
+    volumes:
+      - ${DATADIR}/config/pinchflat:/config:z # config files
+      - ${MEDIADIR}/downloads/youtube:/downloads:z # download folder
