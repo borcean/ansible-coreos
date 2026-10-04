@@ -113,6 +113,7 @@ services:
       - ${DATADIR}/config/plex/transcode:/transcode:z # temp transcoded files
       - ${MEDIADIR}/tv:/tv:z # media library
       - ${MEDIADIR}/movies:/movies:z # media library
+      - ${MEDIADIR}/audiobooks:/audiobooks:z # media library
 
   bazarr:
     container_name: bazarr
